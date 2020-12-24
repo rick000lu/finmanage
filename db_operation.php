@@ -52,7 +52,7 @@ class DBoperation
     }
   }
 
-  function search_record($c_id,$print=true) //search customer transection record
+  function search_record($c_id,$print=true) //search customer transection record. Can choose either print the record or get latest total money
   {
     $sql="SELECT * FROM finmanage.trans_detail WHERE c_id='".$c_id."'";
     $result=mysqli_query($this->conn,$sql);
@@ -74,32 +74,32 @@ class DBoperation
       {
         if($print)
         {
-          echo"<table border='1'>";
+          echo"<table border='1' bordercolor='#00ff00' align='center' style='text-align".": center;'".">";
           echo"\t<thead>";
           echo"\t\t<tr>";
-          echo"\t\t\t<th colspan='7'>".$c_id." 的交易明細</th>";
+          echo"\t\t\t<th colspan='7'><font color='#00ff00'>交易明細</font></th>";
           echo"\t\t</tr>";
           echo"\t\t<tr>";
-          echo"\t\t\t<td>交易編號</td>";
-          echo"\t\t\t<td>顧客代碼</td>";
-          echo"\t\t\t<td>收入</td>";
-          echo"\t\t\t<td>支出</td>";
-          echo"\t\t\t<td>餘額</td>";
-          echo"\t\t\t<td>明細</td>";
-          echo"\t\t\t<td>交易時間</td>";
+          echo"\t\t\t<td><font color='#00ff00'>交易編號</font></td>";
+          echo"\t\t\t<td><font color='#00ff00'>顧客代碼</font></td>";
+          echo"\t\t\t<td><font color='#00ff00'>收入</font></td>";
+          echo"\t\t\t<td><font color='#00ff00'>支出</font></td>";
+          echo"\t\t\t<td><font color='#00ff00'>餘額</font></td>";
+          echo"\t\t\t<td><font color='#00ff00'>明細</font></td>";
+          echo"\t\t\t<td><font color='#00ff00'>交易時間</font></td>";
           echo"\t</thead>";
           echo"\t<tbody>";
           for($i=0;$i<$num;$i++)
           {
             $row=mysqli_fetch_array($result);
             echo"\t\t<tr>";
-            echo"\t\t\t<td>".$row['t_id']."</td>";
-            echo"\t\t\t<td>".$row['c_id']."</td>";
-            echo"\t\t\t<td>".$row['income']."</td>";
-            echo"\t\t\t<td>".$row['cost']."</td>";
-            echo"\t\t\t<td>".$row['total']."</td>";
-            echo"\t\t\t<td>".$row['detail']."</td>";
-            echo"\t\t\t<td>".$row['timestamp']."</td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['t_id']."</font></td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['c_id']."</font></td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['income']."</font></td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['cost']."</font></td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['total']."</font></td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['detail']."</font></td>";
+            echo"\t\t\t<td><font color='#00ff00'>".$row['timestamp']."</font></td>";
             echo"\t\t</tr>";
           }
           echo"\t</tbody>";
@@ -185,9 +185,22 @@ class DBoperation
     $detail=$rec_data[3];
     $sql.=" VALUE("."'".$t_id."'".","."'".$c_id."'".","."'".$income."'".","."'".$cost."'".","."'".$total."'".","."'".$detail."'".")";
     $result=$this->conn->query($sql);
+    return $result;
+  }
+
+  function update_user($userdata)
+  {
+    $c_id=$userdata[0];
+    $c_name=$userdata[1];
+    $c_mail=$userdata[2];
+    $c_pwd=$userdata[3];
+    $sql="UPDATE finmanage.customer_info SET customer_name="."'".$c_name."',"." customer_mail="."'".$c_mail."',"." customer_pwd="."'".$c_pwd."'"." WHERE customer_id="."'".$c_id."'";
+    //echo $sql;
+    $result=$this->conn->query($sql);
     if($result)
     {
-      echo "Record insert successfully<br>";
+      //echo"Update successfully";
+      return true;
     }
   }
 
@@ -200,12 +213,14 @@ class DBoperation
 
 /*$db=new DBoperation();
 $db->DB_connect();
-$userdata=array('John','John@mail.com','5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9');
-$db->insert_user($userdata);
+//$userdata=array('John','John@mail.com','5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9');
+//$db->insert_user($userdata);
 //$rec_data=array('A001','0','1000','salary');
 //$db->insert_record($rec_data);
 //$db->search_record('A001');
-$has_user=$db->search_user('John@mail.com');
+//$has_user=$db->search_user('John@mail.com');
 //echo $has_user;
+$update_data=array('A001','Ejohn','johm@mail.com','5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9');
+$db->update_user($update_data);
 $db->close_connect();*/
  ?>
