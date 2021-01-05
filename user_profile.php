@@ -8,10 +8,10 @@ $user_mail=$user_data['customer_mail'];
 <html>
 <head>
   <title>User Profile</title>
-</head>
-<body bgcolor="#000000">
   <h1 style="text-align: Center;"><font color='#00ff00'>使用者個人資料</font></h1>
   <hr color='#00ff00'>
+</head>
+<body bgcolor="#000000">
     <table border="1" bordercolor="#00ff00" align="center" style="text-align: center;">
         <div >
           <thead>
@@ -32,6 +32,7 @@ $user_mail=$user_data['customer_mail'];
       </div>
     </table>
     <div align="center">
+        <input type="button" value="回主頁" onclick="location.href='http://localhost/xampp/finmanage/main_page.php?id=<?php echo $user_id; ?>'">
         <input type='button' value='更新資料' onclick="location.href='http://localhost/xampp/finmanage/update_user_profile.php?id=<?php echo $user_id; ?>'">
     </div>
 </body>

@@ -1,7 +1,9 @@
 <?php
 include("db_operation.php");
+$msg="";
 function register($user_data)
 {
+  global $msg;
   $db=new DBoperation;
   $db->db_connect();
   $c_mail=$user_data[1];
@@ -14,7 +16,11 @@ function register($user_data)
   $status=$db->insert_user($user_data);
   if($status)
   {
-    echo"<font color='#00ff00'>註冊成功</font><br>";
+    $msg="註冊成功<br><a href='http://localhost/xampp/finmanage/login.php'><font color='#00ff00'>此處登入</font></a>";
+  }
+  else
+  {
+    $msg="<font color='#ff0000'>註冊失敗</font>";
   }
 }
 if($_SERVER['REQUEST_METHOD']=='POST')
@@ -43,7 +49,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
   $v_pwd=hash('sha256',$v_pwd);
   if($h_pwd!=$v_pwd)
   {
-    echo"<font color='#ff0000'>密碼驗證錯誤</font><br>";
+    echo"<font color='#ff0000'>這些密碼不相符，請再試一次</font><br>";
   }
   $user_data=array($name,$addr,$h_pwd);
   register($user_data);
@@ -52,19 +58,23 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 <html>
   <head>
     <title>user register</title>
+    <h1 style="text-align: center"><font color='#00ff00'>新用戶註冊</font></h1>
+    <p style="text-align: center"><font color='#00ff00'>請先註冊使用者資料後再使用本系統</font></p>
+    <hr color="#00ff00">
   </head>
   <body bgcolor="#000000">
-    <h1><font color='#00ff00'>新用戶註冊</font></h1>
-    <p><font color='#00ff00'>請先註冊使用者資料後再使用本系統</font></p>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-      <label><font color="00FFFF">使用者姓名:<br></font></label>
-      <input type="text" name="c_name"><br>
-      <label><font color="#00ffff">使用者信箱:<br></font></label>
-      <input type="text" name="c_mail"><br>
-      <label><font color="#00ffff">設定密碼:<br></font></label>
-      <input type="password" name="c_pwd"><br>
-      <label><font color="#00ffff">再次輸入密碼</font><br></label>
-      <input type="password" name="v_pwd"><br>
-      <input type="submit" value="註冊帳號"><br>
+      <div align="center">
+        <label><font color="00FFFF">使用者姓名:<br></font></label>
+        <input type="text" name="c_name"><br>
+        <label><font color="#00ffff">使用者信箱:<br></font></label>
+        <input type="text" name="c_mail"><br>
+        <label><font color="#00ffff">設定密碼:<br></font></label>
+        <input type="password" name="c_pwd"><br>
+        <label><font color="#00ffff">再次輸入密碼</font><br></label>
+        <input type="password" name="v_pwd"><br>
+        <input type="submit" value="註冊帳號"><br>
+        <p><?php echo $msg;?></p>
+    </div>
   </body>
 </html>

@@ -28,10 +28,10 @@ if($_SERVER['REQUEST_METHOD']=='POST')
  <html>
   <head>
     <title>Add new transection</title>
-  </head>
-  <body bgcolor="#000000">
     <h1 style="text-align: center;"><font color="#00ff00">新增帳單</font></h1>
     <hr color='#00ff00'>
+  </head>
+  <body bgcolor="#ffffff">
     <form method="post" action=<?php echo $_SERVER['PHP_SELF'] ?>>
       <div align="center">
         <label><font color="#00ffff">收入</font><br></label>
@@ -42,6 +42,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         <input type="text" name="detail" maxlength="100"><br>
         <input type="submit" value="新增" height="200" width="200">
         <p><font color="#ff0000"><?php echo $msg; ?></font></p>
+        <input type="button" value="回主頁" onclick="location.href='http://localhost/xampp/finmanage/main_page.php?id=<?php echo $user_id; ?>'">
       </div>
   </body>
 </html>

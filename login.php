@@ -50,12 +50,12 @@ if($_SERVER['REQUEST_METHOD']=="POST")
 ?>
 <html>
   <head>
-    <title>login system</title>
-  </head>
-  <body bgcolor="#000000">
     <h1 style="text-align: Center;" ><font color="#00FF00">個人帳簿系統</font></h1>
     <h3 style="text-align: Center;"><font color="#00FF00">請登錄以查閱個人帳簿</font></h3>
     <hr color="#00ff00">
+    <title>login system</title>
+  </head>
+  <body bgcolor="#000000">
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <div align="center">
         <label >
@@ -70,6 +70,10 @@ if($_SERVER['REQUEST_METHOD']=="POST")
         <label>
           <font color="#ffffff">沒有帳號?</font>
           <a href='http://localhost/xampp/finmanage/register_page.php'><font color="#FF0000">註冊用戶</font></a>
+        </label>
+        <br>
+        <label>
+          <a href="http://localhost/xampp/finmanage/forget_password.php"><font color="#ff0000">忘記密碼</font></a>
         </label>
       </div>
     </form>

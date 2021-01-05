@@ -10,10 +10,19 @@ class DBoperation
   //methods
   private function table_len($table,$col) //return row number
   {
-    $sql="SELECT COUNT("."'".$col."'".")FROM ".$this->db_name.".".$table;
+    $sql="SELECT * FROM ".$this->db_name.".".$table;
     $result=$this->conn->query($sql);
-    $num=mysqli_fetch_array($result);
-    return $num[0];
+    $num=mysqli_num_rows($result);
+    $last_id='';
+    for($i=0;$i<$num;$i++)
+    {
+        $row=mysqli_fetch_array($result);
+        $last_id=$row['t_id'];
+    }
+    $last_id=str_replace("A","0",$last_id);
+    $last_id_num=intval($last_id);
+    echo $last_id_num;
+    return $last_id_num;
   }
 
   function __construct(){;}
@@ -60,15 +69,18 @@ class DBoperation
     if(!$result)
     {
       echo mysqli_error($this->conn);
-      return $last_total;
+      return 0;
     }
     else
     {
       $num=mysqli_num_rows($result);
       if($num==0)
       {
-        echo "No record<br>";
-        return $last_total;
+        if($print)
+        {
+          echo "<h1 style='text-align: center'><font color='#ff0000'>No record</font></h1><br>";
+        }
+        return 0;
       }
       else
       {
@@ -180,10 +192,19 @@ class DBoperation
     $t_id=$t_id_char.$t_id_num;
     $c_id=$rec_data[0];
     $income=$rec_data[1];
+    if(trim($income)=='')
+    {
+        $income=0;
+    }
     $cost=$rec_data[2];
+    if(trim($cost)=='')
+    {
+        $cost=0;
+    }
     $total=$this->search_record($c_id,$print=false)+$income-$cost;
     $detail=$rec_data[3];
     $sql.=" VALUE("."'".$t_id."'".","."'".$c_id."'".","."'".$income."'".","."'".$cost."'".","."'".$total."'".","."'".$detail."'".")";
+    echo $sql;
     $result=$this->conn->query($sql);
     return $result;
   }
@@ -197,11 +218,7 @@ class DBoperation
     $sql="UPDATE finmanage.customer_info SET customer_name="."'".$c_name."',"." customer_mail="."'".$c_mail."',"." customer_pwd="."'".$c_pwd."'"." WHERE customer_id="."'".$c_id."'";
     //echo $sql;
     $result=$this->conn->query($sql);
-    if($result)
-    {
-      //echo"Update successfully";
-      return true;
-    }
+    return $result;
   }
 
   function close_connect()

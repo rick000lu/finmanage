@@ -47,11 +47,13 @@ if($_SERVER['REQUEST_METHOD']=="POST")
 }
  ?>
  <html>
- <title> User profile update</title>
- <body bgcolor="#000000">
-   <h1 style="text-align: Center;"><font color='#00ff00'>更新使用者資料</font></h1>
-   <h2 style="text-align: Center;"><font color="#00ff00">請輸入更新資料以更新使用者資料</font></h2>
-   <hr color="#00ff00">
+  <head>
+    <title> User profile update</title>
+    <h1 style="text-align: Center;"><font color='#00ff00'>更新使用者資料</font></h1>
+    <h2 style="text-align: Center;"><font color="#00ff00">請輸入更新資料以更新使用者資料</font></h2>
+    <hr color="#00ff00">
+  </head>
+  <body bgcolor="#000000">
    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
      <div align="center">
        <label><font color="#00ffff">使用者姓名</font></label><br>
@@ -64,7 +66,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
        <input type="password" name="v_pwd"><br>
        <input type="submit" value="更新"><br>
        <p><font color='#00ff00'><?php echo $msg; ?></font></p>
-       <a href='http://localhost/xampp/finmanage/main_page.php'><font color='#00ffff'>回主頁</font></a>
+       <input type="button" value="回主頁" onclick="location.href='http://localhost/xampp/finmanage/main_page.php?id=<?php echo $user_id; ?>'">
      </div>
- </body>
+   </body>
 </html>
