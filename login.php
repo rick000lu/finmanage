@@ -17,21 +17,22 @@ function password_check($add,$pwd)
     if($pwd==$user_data['customer_pwd'])
     {
       session_start();
-      //connect to main page
+      //store user_info
       $_SESSION['uid']=$user_data['customer_id'];
       $_SESSION['umail']=$user_data['customer_mail'];
       $url="http://localhost/xampp/finmanage/main_page.php?id=".$_SESSION['uid'];
+      //go to main page
       header("Location:".$url);
-      //echo"<font color='#00ff00'>Pass</font><br>";
-
     }
     else
     {
+        //login fail
       echo"<font color="."'#"."FF0000'>使用者帳號或密碼錯誤<font>";
     }
   }
 }
 
+//get user input data
 if($_SERVER['REQUEST_METHOD']=="POST")
 {
   $add=$_POST['Address'];
