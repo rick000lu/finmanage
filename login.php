@@ -7,6 +7,8 @@ function password_check($add,$pwd)
   $db=new DBoperation();
   $db->DB_connect();
   $is_user=$db->search_user($add);
+
+  //no such user
   if(!$is_user)
   {
     echo "<font color='#ff0000'>沒有相對應的使用者</font><br>";
@@ -14,8 +16,11 @@ function password_check($add,$pwd)
   else
   {
     $user_data=mysqli_fetch_array($is_user);
+
+    //verify password
     if($pwd==$user_data['customer_pwd'])
     {
+        //start a session
       session_start();
       //store user_info
       $_SESSION['uid']=$user_data['customer_id'];
@@ -45,6 +50,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
   {
     echo"<font color="."'"."#ff0000"."'".">請輸入密碼<br></font>";
   }
+  //use encryption hash function encrypt password
   $pwd=hash('sha256',$pwd);
   password_check($add,$pwd);
 }
